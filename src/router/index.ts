@@ -15,14 +15,14 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/Register.vue')
   },
   {
-    path: '/locacao',
-    name: 'locacao',
+    path: '/location',
+    name: 'location',
     component: () => import('../components/Layout.vue'),
     children: [
       {
         path: '',
-        name: 'locacao',
-        component: () => import('../views/Locacao.vue')
+        name: 'location-list',
+        component: () => import('../views/Location.vue')
       }
     ]
   }

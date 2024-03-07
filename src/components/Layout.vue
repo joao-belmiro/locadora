@@ -43,19 +43,19 @@
           >
             <li>
               <router-link
-                to="/locacao"
+                to="/location"
                 class="text-indigo-900 dark:text-white hover:underline"
                 aria-current="page"
                 >Home</router-link
               >
             </li>
             <li>
-              <router-link to="/clientes" class="text-indigo-900 dark:text-white hover:underline"
+              <router-link to="/clients" class="text-indigo-900 dark:text-white hover:underline"
                 >Clientes</router-link
               >
             </li>
             <li>
-              <router-link to="/usuarios" class="text-indigo-900 dark:text-white hover:underline"
+              <router-link to="/users" class="text-indigo-900 dark:text-white hover:underline"
                 >Usuários</router-link
               >
             </li>

@@ -4,7 +4,7 @@
       <h2
         class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
       >
-        Realize o seu Cadastro
+        Cadastro de usuário
       </h2>
     </div>
 
@@ -65,19 +65,17 @@
         </div>
         <div class="flex items-start mb-5">
           <div class="flex items-center h-5">
-            <input checked id="checkbox-1" type="checkbox" value="" class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
+            <input  checked id="active" type="checkbox" value="" class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
 
           </div>
           <label
-            for="terms"
-            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            for="active"
+            class="ms-2 text-sm font-medium text-indigo-800 hover:underlin cursor-pointer"
             >
-            <a href="#" class="text-indigo-800 hover:underlin"
-              >Ativo </a
-            ></label
+            Ativo</label
           >
         </div>
-        <div  class="flex flex-row justify-between gap-5 ">
+        <div  class="flex flex-row justify-between gap-5">
           <button
             type="submit"
             class="flex w-48 justify-center rounded-md bg-indigo-600 px-3 p-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

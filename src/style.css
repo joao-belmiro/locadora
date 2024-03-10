@@ -23,3 +23,14 @@ input[type="checkbox"] {
   -ms-appearance: checkbox;
   -o-appearance: checkbox;
 }
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(209 213 219);
+  border-radius: 8px;
+
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(209 213 219);
+}

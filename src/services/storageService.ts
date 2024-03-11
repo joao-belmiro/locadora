@@ -23,7 +23,7 @@ export default class LocalStorage<T> {
     update(id: number, newItem: T): void {
         const items = this.getAll();
         const index: number = items.findIndex(item => item.id === id)
-        if (index >= 0 && id < items.length) {
+        if (index >= -1) {
             items[index] = newItem;
             localStorage.setItem(this.storageKey, JSON.stringify(items));
         }

@@ -12,4 +12,6 @@ interface Client {
         cidade: string;
         uf: string;
     };
+    status: 'ativo' | 'inativo';
+
 }

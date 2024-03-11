@@ -1,6 +1,8 @@
 <template>
   <div class="container mx-auto my-4 bg-gray-200 p-4 rounded-md">
-    <h1 class="mb-4 text-2xl font-semibold">{{ client.id !== 0 ?  'Editar' : 'Cadastrar' }} Cliente</h1>
+    <h1 class="mb-4 text-2xl font-semibold">
+      {{ client.id !== 0 ? "Editar" : "Cadastrar" }} Cliente
+    </h1>
     <form
       @submit.prevent="submitForm"
       class="grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -112,6 +114,51 @@
         />
       </div>
       <div class="col-span-2 md:col-span-1">
+        <ul
+          class="items-center w-full md:w-1/2 text-sm font-medium text-gray-900 bg-white border py-2 rounded-lg sm:flex dark:bg-gray-400 dark:text-white"
+        >
+          <li
+            class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-400"
+          >
+            <div class="flex items-center ps-3">
+              <input
+                id="horizontal-list-radio-license"
+                type="radio"
+                value="ativo"
+                v-model="client.status"
+                name="list-radio"
+                class="w-4 h-4 text-indigo-600 bg-gray-100 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+              />
+              <label
+                for="horizontal-list-radio-license"
+                class="w-full py-1 ms-2 text-sm font-medium text-gray-900"
+                >Ativo
+              </label>
+            </div>
+          </li>
+          <li
+            class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-400"
+          >
+            <div class="flex items-center ps-3">
+              <input
+                id="horizontal-list-radio-id"
+                type="radio"
+                v-model="client.status"
+                value="inativo"
+                name="list-radio"
+                class="w-4 h-4 text-indigo-600 bg-gray-100 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+              />
+              <label
+                for="horizontal-list-radio-id"
+                class="w-full py-1 ms-2 text-sm font-medium text-gray-900"
+                >Inativo</label
+              >
+            </div>
+          </li>
+        </ul>
+      </div>
+      <br>
+      <div class="col-span-2 md:col-span-1">
         <div class="w-full flex flex-row mt-auto gap-4">
           <button
             type="submit"
@@ -133,7 +180,7 @@
   
 <script setup lang="ts">
 interface Endereco {
-  bairro: string,
+  bairro: string;
   cep: string;
   complemento: string;
   ddd: string;
@@ -147,10 +194,10 @@ interface Endereco {
 
 import { ref, toRaw, onMounted } from "vue";
 import { Client } from "../models/Client";
-import { getCep } from '../services/viaCepService'
+import { getCep } from "../services/viaCepService";
 import { useRouter } from "vue-router";
-import LocalStorage from '../services/storageService'
-const router = useRouter()
+import LocalStorage from "../services/storageService";
+const router = useRouter();
 const client = ref<Client>({
   id: 0,
   nome: "",
@@ -165,76 +212,77 @@ const client = ref<Client>({
     cidade: "",
     uf: "",
   },
+  status: "ativo",
 });
-const storeClient = new LocalStorage<Client>('client')
+const storeClient = new LocalStorage<Client>("client");
 const addressDisable = ref<boolean>(true);
 
-onMounted( () => {
-  if (router.currentRoute.value.name === 'edit-client') {
-    const clientId: number = new Number(router.currentRoute.value.params.id).valueOf()
-    const clientFind: Client = storeClient.read(clientId)
-    if (clientFind === null) alert('Cliente não encontrado')
-    if (clientFind !== null) client.value = clientFind
+onMounted(() => {
+  if (router.currentRoute.value.name === "edit-client") {
+    const clientId: number = new Number(
+      router.currentRoute.value.params.id
+    ).valueOf();
+    const clientFind: Client = storeClient.read(clientId);
+    if (clientFind === null) alert("Cliente não encontrado");
+    if (clientFind !== null) client.value = clientFind;
   }
-})
+});
 
-const submitForm = (): void  => {
-  if (router.currentRoute.value.name === 'edit-client') {
+const submitForm = (): void => {
+  if (router.currentRoute.value.name === "edit-client") {
     try {
-      const rawClient = toRaw(client.value)
-      console.log(rawClient)
-      storeClient.update(rawClient.id, rawClient)
-      alert('cliente editado com sucesso')
-      router.push(`/clients`)
+      const rawClient = toRaw(client.value);
+      console.log(rawClient);
+      storeClient.update(rawClient.id, rawClient);
+      alert("cliente editado com sucesso");
+      router.push(`/clients`);
     } catch (error) {
-      alert('erro ao editar cliente' + error)
-      console.error(error)
+      alert("erro ao editar cliente" + error);
+      console.error(error);
     }
   } else {
     try {
-      client.value.id = storeClient.getSize() + 1
-      const clientRaw:Client = toRaw(client.value)
-      storeClient.create(clientRaw)
-      alert('cliente criado com sucesso')
-      router.push(`/clients`)
-
+      client.value.id = storeClient.getSize() + 1;
+      const clientRaw: Client = toRaw(client.value);
+      storeClient.create(clientRaw);
+      alert("cliente criado com sucesso");
+      router.push(`/clients`);
     } catch (error) {
-      alert('erro ao criar cliente' + error)
-      console.error(error)
+      alert("erro ao criar cliente" + error);
+      console.error(error);
     }
-   
   }
 };
 const searchCep = async () => {
   const cep: string = client.value.endereco.cep;
   if (cep.length == 8) {
-    const response = await getCep(cep).then(res => {
-      console.log(res)
-      return res
-    }).catch(erro => {
-      return erro
-    })
+    const response = await getCep(cep)
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((erro) => {
+        return erro;
+      });
     if (response.data)
-    
-    if (response.data.cep !== undefined) {
-      console.log(response)
-      mockAdress(response.data)
-    }
-    if(response.status == 200 && response.data.erro !== undefined) {
-      addressDisable.value = false
-      alert('Erro ao buscar endereco, use um cep diferente ')
+      if (response.data.cep !== undefined) {
+        console.log(response);
+        mockAdress(response.data);
+      }
+    if (response.status == 200 && response.data.erro !== undefined) {
+      addressDisable.value = false;
+      alert("Erro ao buscar endereco, use um cep diferente ");
     }
     if (response.status !== 200) {
-      alert('Erro ao buscar endereco, formato inválido')
-
+      alert("Erro ao buscar endereco, formato inválido");
     }
   }
-}
+};
 
-const mockAdress = (endereco: Endereco ) => {
-  client.value.endereco.logradouro = endereco.logradouro
-  client.value.endereco.bairro = endereco.bairro
-  client.value.endereco.cidade = endereco.localidade
-  client.value.endereco.uf = endereco.uf
-}
+const mockAdress = (endereco: Endereco) => {
+  client.value.endereco.logradouro = endereco.logradouro;
+  client.value.endereco.bairro = endereco.bairro;
+  client.value.endereco.cidade = endereco.localidade;
+  client.value.endereco.uf = endereco.uf;
+};
 </script>

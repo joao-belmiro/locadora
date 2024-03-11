@@ -19,10 +19,11 @@
         <span class="bg-blue-100 text-white text-xs font-medium px-2 py-0.5 rounded dark:bg-indigo-900 ">Ano: {{ year }}</span>
         <span class="bg-gray-100 text-white text-xs font-medium px-2 py-0.5 rounded dark:bg-gray-700">{{  runtime }}</span>
       </div>
+      <br>
       <div class="inline-flex gap-4">
         <button
           v-if="showAdd"
-          @click="addTitle"
+          @click="addTitle(index)"
           class="inline-flex items-center px-2 py-1 text-sm font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
         >
           Adicionar
@@ -54,8 +55,8 @@ const props = defineProps({
 })
 const emit = defineEmits(['addTitle', 'removeTitle'])
 
-const addTitle = () => {
-  emit('addTitle')
+const addTitle = (index: number) => {
+  emit('addTitle', index)
 }
 
 const removeTitle = () => {

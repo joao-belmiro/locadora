@@ -21,12 +21,14 @@
       </div>
       <div class="inline-flex gap-4">
         <button
+          v-if="showAdd"
           @click="addTitle"
           class="inline-flex items-center px-2 py-1 text-sm font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
         >
           Adicionar
         </button>
         <button
+          v-if="showRemove"
           @click="removeTitle"
           class="inline-flex items-center px-2 py-1 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-re-800 focus:ring-4 focus:outline-none focus:ring-re-300  hover:bg-red-800 dark:focus:ring-red-800"
         >
@@ -39,6 +41,7 @@
 <script setup lang="ts">
 import { defineProps, defineEmits, toRaw } from 'vue'
 const props = defineProps({
+   index: Number,
    plot: String,
    genre: String,
    title: String, 
@@ -47,6 +50,7 @@ const props = defineProps({
    year: String,
    poster: String,
    showRemove: Boolean,
+   showAdd: Boolean,
 })
 const emit = defineEmits(['addTitle', 'removeTitle'])
 

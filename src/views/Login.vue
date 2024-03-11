@@ -9,21 +9,21 @@
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="#" method="POST">
+      <form @submit.prevent="doLogin" class="space-y-6" action="#" method="POST">
         <div>
           <label
-            for="email"
+            for="documento"
             class="block text-sm font-medium leading-6 text-gray-900"
             
-          > E-mail</label>
+          >Documento</label>
           <div class="mt-2">
             <input
-              id="email"
-              name="email"
-              type="email"
-              autocomplete="email"
+              id="documento"
+              name="documento"
+              type="number"
+              v-model="documento"
               required
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              class="px-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
         </div>
@@ -41,8 +41,9 @@
               id="password"
               name="password"
               type="password"
+              v-model="senha"
               required
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              class="px-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
         </div>
@@ -68,3 +69,39 @@
     </div>
   </div>
 </template>
+<script setup lang="ts">
+
+import LocalStorage from '../services/storageService'
+import { useRouter } from 'vue-router'
+import { User } from '../models/User'
+import { ref } from 'vue';
+const router = useRouter()
+const storeUser = new LocalStorage<User>('users')
+const documento = ref<number>()
+const senha = ref<string>('')
+
+const doLogin = (): void => {
+  try {
+    const allUsers: User[] = storeUser.getAll();
+    let searchUser: User = allUsers.find(user => user.documento === documento.value && user.senha === senha.value)
+    if (searchUser !== undefined && searchUser.status === 'ativo') {
+      router.push('/location')
+      localStorage.setItem('userLogged', JSON.stringify(searchUser))
+    }
+    if (searchUser !== undefined && searchUser.status === 'inativo') {
+        alert('Usuário inativo, tente outro')
+        localStorage.removeItem('userLogged')
+    }
+    if (searchUser === undefined) {
+      localStorage.removeItem('userLogged')
+      let msg: string = 'Credênciais incorretas ou usuário inexistente'
+      alert(msg)
+      throw new Error(msg)
+    }
+   
+  } catch (error) {
+      localStorage.removeItem('userLogged')
+      console.error(error)
+  }
+}
+</script>

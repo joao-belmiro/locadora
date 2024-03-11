@@ -15,14 +15,39 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/Register.vue')
   },
   {
-    path: '/location',
-    name: 'location',
+    path: '/',
+    name: 'home',
     component: () => import('../components/Layout.vue'),
     children: [
       {
-        path: '',
+        path: '/location',
         name: 'location-list',
         component: () => import('../views/Location.vue')
+      },
+      {
+        path: '/new-location',
+        name: 'new-location',
+        component: () => import('../views/FormLocation.vue')
+      }, 
+      {
+        path: '/edit-location/:id',
+        name: 'edit-location',
+        component: () => import('../views/FormLocation.vue')
+      }, 
+      {
+        path: '/clients',
+        name: 'clients-list',
+        component: () => import('../views/Client.vue')
+      },
+      {
+        path: '/new-client',
+        name: 'new-client',
+        component: () => import('../views/FormClient.vue')
+      },
+      {
+        path: '/edit-client/:id',
+        name: 'edit-client',
+        component: () => import('../views/FormClient.vue')
       }
     ]
   }

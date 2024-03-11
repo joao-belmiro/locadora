@@ -135,12 +135,9 @@ onMounted(() => {
 });
 
 const submitForm = (): void => {
-  console.log(router.currentRoute.value.name)
   if (router.currentRoute.value.name === "edit-user") {
     try {
-      console.log('editou')
       const rawUser = toRaw(userForm.value);
-      console.log(rawUser);
       storeUser.update(rawUser.id, rawUser);
       alert("usuário editado com sucesso");
       router.push(`/users`);
@@ -150,8 +147,6 @@ const submitForm = (): void => {
     }
   } else {
     try {
-      console.log('saçvpu')
-
       userForm.value.id = storeUser.getSize() + 1;
       const userRaw: User = toRaw(userForm.value);
       storeUser.create(userRaw);

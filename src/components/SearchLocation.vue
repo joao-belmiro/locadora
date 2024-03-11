@@ -83,7 +83,6 @@ const searchTitles = async () => {
   const response = await getTitles(title.value, onlyMovies, year.value).then(res => res).catch(erro => erro)
   if (response.status === 200 && response.data.Error === undefined) {
     titlesSearched.value = Array.isArray(response.data) ? response.data : [response.data]
-    console.log(titlesSearched.value)
   }
   if (response.data.Error) {
     titlesSearched.value = []
@@ -91,7 +90,6 @@ const searchTitles = async () => {
   }
 }
 const onAdd = (index: number) => {
-  console.log(index)
   const rawMovie: any = toRaw(titlesSearched.value[index])
   emit('locateTitle', rawMovie)
 }

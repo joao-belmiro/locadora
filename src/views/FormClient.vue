@@ -232,7 +232,6 @@ const submitForm = (): void => {
   if (router.currentRoute.value.name === "edit-client") {
     try {
       const rawClient = toRaw(client.value);
-      console.log(rawClient);
       storeClient.update(rawClient.id, rawClient);
       alert("cliente editado com sucesso");
       router.push(`/clients`);
@@ -258,7 +257,6 @@ const searchCep = async () => {
   if (cep.length == 8) {
     const response = await getCep(cep)
       .then((res) => {
-        console.log(res);
         return res;
       })
       .catch((erro) => {
@@ -266,7 +264,6 @@ const searchCep = async () => {
       });
     if (response.data)
       if (response.data.cep !== undefined) {
-        console.log(response);
         mockAdress(response.data);
       }
     if (response.status == 200 && response.data.erro !== undefined) {

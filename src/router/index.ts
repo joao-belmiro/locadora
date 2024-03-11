@@ -7,12 +7,17 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'login',
-    component: Login  
+    component: Login,
   },
   {
     path: '/register',
     name: 'register',
-    component: () => import('../views/Register.vue')
+    component: () => import('../views/Register.vue'),
+  },
+  {
+    path: '/edit-user/:id',
+    name: 'edit-user',
+    component: () => import('../views/Register.vue'),
   },
   {
     path: '/',
@@ -22,32 +27,37 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/location',
         name: 'location-list',
-        component: () => import('../views/Location.vue')
+        component: () => import('../views/Location.vue'),
       },
       {
         path: '/new-location',
         name: 'new-location',
-        component: () => import('../views/FormLocation.vue')
+        component: () => import('../views/FormLocation.vue'),
       }, 
       {
         path: '/edit-location/:id',
         name: 'edit-location',
-        component: () => import('../views/FormLocation.vue')
+        component: () => import('../views/FormLocation.vue'),
       }, 
       {
         path: '/clients',
         name: 'clients-list',
-        component: () => import('../views/Client.vue')
+        component: () => import('../views/Client.vue'),
       },
       {
         path: '/new-client',
         name: 'new-client',
-        component: () => import('../views/FormClient.vue')
+        component: () => import('../views/FormClient.vue'),
       },
       {
         path: '/edit-client/:id',
         name: 'edit-client',
-        component: () => import('../views/FormClient.vue')
+        component: () => import('../views/FormClient.vue'),
+      },
+      {
+        path: '/users',
+        name: 'list-users',
+        component: () => import('../views/Users.vue'),
       }
     ]
   }

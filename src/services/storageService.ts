@@ -14,8 +14,7 @@ export default class LocalStorage<T> {
     read(id: number): T | null {
         const items = this.getAll();
         const index: number = items.findIndex(item => item.id === id)
-
-        if (id >= 0 && id < items.length) {
+        if (id >= -1) {
             return items[index];
         }
         return null;

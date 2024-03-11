@@ -7,9 +7,8 @@
         Cadastro de usuário
       </h2>
     </div>
-
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="#" method="POST">
+      <form  @submit.prevent="submitForm" class="space-y-6" >
         <div>
           <label
             for="nome"
@@ -19,6 +18,7 @@
           >
           <div class="mt-2">
             <input
+              v-model="userForm.nome"
               id="nome"
               name="nome"
               type="text"
@@ -36,6 +36,7 @@
           >
           <div class="mt-2">
             <input
+            v-model="userForm.documento"
               id="documento"
               name="documento"
               type="number"
@@ -55,6 +56,7 @@
           </div>
           <div class="mt-2">
             <input
+              v-model="userForm.senha"
               id="password"
               name="password"
               type="password"
@@ -63,17 +65,27 @@
             />
           </div>
         </div>
-        <div class="flex items-start mb-5">
+        <div class="flex items-start mb-5 gap-8">
           <div class="flex items-center h-5">
-            <input  checked id="active" type="checkbox" value="" class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
+            <input v-model="userForm.status" id="ativo" type="radio" value="ativo" class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
+            <label
+              for="ativo"
+              class="ms-2 text-sm font-medium text-indigo-800 hover:underlin cursor-pointer"
+              >
+              Ativo</label
+            >
 
           </div>
-          <label
-            for="active"
-            class="ms-2 text-sm font-medium text-indigo-800 hover:underlin cursor-pointer"
+          <div class="flex items-center h-5">
+            <input  v-model="userForm.status" id="inativo" type="radio" value="inativo" class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
+            <label
+              for="inativo"
+              class="ms-2 text-sm font-medium text-indigo-800 hover:underlin cursor-pointer"
+              >
+              inativo</label
             >
-            Ativo</label
-          >
+
+          </div>
         </div>
         <div  class="flex flex-row justify-between gap-5">
           <button
@@ -83,7 +95,7 @@
             Cadastrar
           </button>
           <router-link
-            to="/"
+            :to="backRoute"
             class="flex w-48 justify-center rounded-md bg-slate-600 px-3 p-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Voltar 
@@ -93,3 +105,62 @@
     </div>
   </div>
 </template>
+<script setup lang="ts">
+
+import { ref, toRaw, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import LocalStorage from "../services/storageService";
+import { User }  from "../models/User.ts";
+const router = useRouter();
+const userForm = ref<User>({
+  id: 0,
+  nome: "",
+  documento: "",
+  senha: "",
+  status: "ativo",
+});
+const backRoute = ref<string>('')
+const storeUser = new LocalStorage<User>("users");
+
+onMounted(() => {
+  backRoute.value = window.history.state.back  === '/' ? '/' : '/users'
+  if (router.currentRoute.value.name === "edit-user") {
+    const userId: number = new Number(
+      router.currentRoute.value.params.id
+    ).valueOf();
+    const userFind: User = storeUser.read(userId);
+    if (userFind === null) alert("usuário não encontrado");
+    if (userFind !== null) userForm.value = userFind;
+  }
+});
+
+const submitForm = (): void => {
+  console.log(router.currentRoute.value.name)
+  if (router.currentRoute.value.name === "edit-user") {
+    try {
+      console.log('editou')
+      const rawUser = toRaw(userForm.value);
+      console.log(rawUser);
+      storeUser.update(rawUser.id, rawUser);
+      alert("usuário editado com sucesso");
+      router.push(`/users`);
+    } catch (error) {
+      alert("erro ao editar usuário" + error);
+      console.error(error);
+    }
+  } else {
+    try {
+      console.log('saçvpu')
+
+      userForm.value.id = storeUser.getSize() + 1;
+      const userRaw: User = toRaw(userForm.value);
+      storeUser.create(userRaw);
+      alert("usuário criado com sucesso");
+      router.push(`/users`);
+    } catch (error) {
+      alert("erro ao criar usuário" + error);
+      console.error(error);
+    }
+  }
+};
+</script>

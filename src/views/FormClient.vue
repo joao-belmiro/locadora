@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto my-4 bg-gray-200 p-4 rounded-md">
-    <h1 class="mb-4 text-2xl font-semibold">Novo Cliente</h1>
+    <h1 class="mb-4 text-2xl font-semibold">{{ client.id !== 0 ?  'Editar' : 'Cadastrar' }} Cliente</h1>
     <form
       @submit.prevent="submitForm"
       class="grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -145,10 +145,12 @@ interface Endereco {
   uf: string;
 }
 
-import { ref, toRaw } from "vue";
+import { ref, toRaw, onMounted } from "vue";
 import { Client } from "../models/Client";
 import { getCep } from '../services/viaCepService'
+import { useRouter } from "vue-router";
 import LocalStorage from '../services/storageService'
+const router = useRouter()
 const client = ref<Client>({
   id: 0,
   nome: "",
@@ -166,11 +168,42 @@ const client = ref<Client>({
 });
 const storeClient = new LocalStorage<Client>('client')
 const addressDisable = ref<boolean>(true);
-const submitForm = () => {
-  client.value.id = storeClient.getSize() + 1
-  const clientRaw:Client = toRaw(client.value)
-  storeClient.create(clientRaw)
-  console.log("Dados do cliente:", client.value);
+
+onMounted( () => {
+  if (router.currentRoute.value.name === 'edit-client') {
+    const clientId: number = new Number(router.currentRoute.value.params.id).valueOf()
+    const clientFind: Client = storeClient.read(clientId)
+    if (clientFind === null) alert('Cliente não encontrado')
+    if (clientFind !== null) client.value = clientFind
+  }
+})
+
+const submitForm = (): void  => {
+  if (router.currentRoute.value.name === 'edit-client') {
+    try {
+      const rawClient = toRaw(client.value)
+      console.log(rawClient)
+      storeClient.update(rawClient.id, rawClient)
+      alert('cliente editado com sucesso')
+      router.push(`/clients`)
+    } catch (error) {
+      alert('erro ao editar cliente' + error)
+      console.error(error)
+    }
+  } else {
+    try {
+      client.value.id = storeClient.getSize() + 1
+      const clientRaw:Client = toRaw(client.value)
+      storeClient.create(clientRaw)
+      alert('cliente criado com sucesso')
+      router.push(`/clients`)
+
+    } catch (error) {
+      alert('erro ao criar cliente' + error)
+      console.error(error)
+    }
+   
+  }
 };
 const searchCep = async () => {
   const cep: string = client.value.endereco.cep;
@@ -188,11 +221,11 @@ const searchCep = async () => {
       mockAdress(response.data)
     }
     if(response.status == 200 && response.data.erro !== undefined) {
-      addressDisable.value = true
-      alert('Erro ao buscar endereco')
+      addressDisable.value = false
+      alert('Erro ao buscar endereco, use um cep diferente ')
     }
     if (response.status !== 200) {
-      alert('Erro ao buscar endereco')
+      alert('Erro ao buscar endereco, formato inválido')
 
     }
   }

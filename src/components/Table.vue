@@ -8,7 +8,7 @@
       >
         <tr>
           <th v-for="col in columns" :key="col.label" scope="col" class="px-6 py-3">{{ col.label }}</th>
-         
+          <th scope="col" class="px-6 py-3">Ações</th>
         </tr>
       </thead>
       <tbody>

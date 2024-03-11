@@ -1,19 +1,21 @@
 <template>
-  <div class="grid gap-6 mb-6 md:grid-cols-4">
-    <input
+  <div class="flex flex-row flex-wrap items-center gap-4">
+    <div class="md:w-1/3 w-full ">
+      <label class="text-sm" for="filter">{{ placeholder }}</label>
+      <input
       id="filter"
       name="filter"
       type="text"
       required
       @input="onEmitSearch"
-      :placeholder="placeholder"
-      class="block shrink w-50 p-4 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-    />
-
+      class="block w-full shrink p-4 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      />
+    </div>
+      
     <slot></slot>
     
     <ul
-      class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-400 dark:border-gray-400 dark:text-white"
+      class="items-center w-full md:w-1/5 text-sm font-medium text-gray-900 bg-white border py-2 rounded-lg sm:flex dark:bg-gray-400 dark:text-white"
     >
       <li
         class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-400"
@@ -22,7 +24,7 @@
           <input
             id="horizontal-list-radio-license"
             type="radio"
-            value="ativo"
+            :value="statusPositive"
             v-model="status"
             @input="onEmitStatus"
             name="list-radio"
@@ -31,7 +33,7 @@
           <label
             for="horizontal-list-radio-license"
             class="w-full py-1 ms-2 text-sm font-medium text-gray-900"
-            >Ativo
+            >{{ statusPositive }}
           </label>
         </div>
       </li>
@@ -44,14 +46,14 @@
             type="radio"
             v-model="status"
             @input="onEmitStatus"
-            value="inativo"
+            :value="statusNegative"
             name="list-radio"
             class="w-4 h-4 text-indigo-600 bg-gray-100 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
           />
           <label
             for="horizontal-list-radio-id"
             class="w-full py-1 ms-2 text-sm font-medium text-gray-900"
-            >Inativo</label
+            >{{ statusNegative}}</label
           >
         </div>
       </li>
@@ -59,7 +61,7 @@
 
     <router-link
       :to="routerAdd ? routerAdd : '/'"
-      class="text-center font-semibold bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md md:py-3 md:px-6 lg:py-2 lg:px-6"
+      class="text-center w-full md:w-1/6 lg:w-1/6  font-semibold bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md md:py-3 md:px-6 lg:py-2 lg:px-6"
       >{{ textAdd }}</router-link
     >
   </div>
@@ -69,7 +71,9 @@ import { defineProps, ref, defineEmits } from "vue";
 const props = defineProps({
   placeholder: String,
   routerAdd: String,
-  textAdd: String
+  textAdd: String,
+  statusPositive: String,
+  statusNegative: String
 })
 
 const search = ref<string>('')

@@ -151,7 +151,7 @@ const submitForm = (): void => {
       const userRaw: User = toRaw(userForm.value);
       storeUser.create(userRaw);
       alert("usuário criado com sucesso");
-      router.push(`/users`);
+      router.push(`/`);
     } catch (error) {
       alert("erro ao criar usuário" + error);
       console.error(error);

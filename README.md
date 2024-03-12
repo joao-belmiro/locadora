@@ -1,18 +1,58 @@
-# Vue 3 + TypeScript + Vite
+# Locadora
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+### Tecnologias do projeto 
+para este projeto usamos as tecnologias abaixo, com foco de usar o que tem de mais atual no ecossistema do Vue.js:
 
-## Recommended IDE Setup
+##### Dependências
+| Pacote      | Versão  |
+|-------------|---------|
+| axios       | 1.6.7  |
+| vue         | 3.4.19 |
+| vue-router  | 4.3.0  |
+| tailwindcss             | 3.4.1 |
+| typescript              | 5.2.2 |
+| @vue/test-utils         | 2.4.4 |
+| @vitejs/plugin-vue      | 5.0.4 |
+| vite                    | 5.1.4 |
+| vitest                  | 1.3.1 |
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Este é um crud de 3 entidades com foco em simular uma locadora, desde o login no sitema e a locação de filmes e séries ,os dados são salvos em uma local storage para manter os dados persistidos
 
-## Type Support For `.vue` Imports in TS
+##### Mais informações sobre testes e código
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+veja esse projeto onde tenho outras funcionalidades e testes que julgo serem importantes [products-selling](https://github.com/joao-belmiro/products-selling)
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+## Disclaimer 
+* Não há validações complexas nos formulários nem formatação rigorosa dos dados
+* as variaveis de ambiente estão mocadas para facilitar o avaliador
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+## Instalação das dependências
+
+Primeiro precisamos instalar um versão do nodeJs compatível, para este projeto temos a versão abaixo, que foi usada para 
+
+[Nodejs 18.14.0](https://nodejs.org/en/blog/release/v18.14.0)
+
+
+Para realizar a configuração local do projeto siga os passos **1** e **2** e o projeto aparecerá disponivel na url [localhost:5173]( http://localhost:5173/) caso esta porta esteja disponível
+### 1- Instalação das dependências
+```
+npm install
+```
+
+### 2- Compilar e subir o servidor local
+```
+npm run dev
+```
+
+### Build da aplicação
+Ao realizar o build da aplicação podemos fazer o deploy em alguma plataforma apenas copiando a pasta /dist, ou crie um fork do projeto e faça as alterações desejadas 
+```
+npm run build
+```
+
+### Executar testes unitários
+Foram feitos testes unitários apenas para atestar conhecimento, e não máxima cobertura do código, para mais exemplos vide o projeto supracitado 
+
+```
+npm run test
+```

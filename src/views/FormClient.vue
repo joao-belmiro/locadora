@@ -215,7 +215,7 @@ const client = ref<Client>({
   status: "ativo",
 });
 const storeClient = new LocalStorage<Client>("client");
-const addressDisable = ref<boolean>(true);
+const addressDisable = ref<boolean>(false);
 
 onMounted(() => {
   if (router.currentRoute.value.name === "edit-client") {
@@ -264,6 +264,7 @@ const searchCep = async () => {
       });
     if (response.data)
       if (response.data.cep !== undefined) {
+        addressDisable.value = true
         mockAdress(response.data);
       }
     if (response.status == 200 && response.data.erro !== undefined) {

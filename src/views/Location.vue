@@ -4,8 +4,10 @@
       placeholder="Nome do cliente"
       text-add="Nova Locação"
       router-add="/new-location"
-      status-negative="alugado"
-      status-positive="entregue"
+      status-negative="entregue"
+      status-positive="alugado"
+      @emit-search="filterByClient"
+      @emit-status="event => filterBy('status',event)"
     >
       <div class="w-full md:w-36 min-w-0">
         <label class="text-sm" for="dateInitLocation"> Inicio da Locação</label>
@@ -13,6 +15,7 @@
           type="date"
           v-model="dataLocacao"
           id="dateInitLocation"
+          @input="event => filterBy('dataLocacao', event.target.value)"
           class="block shrink w-full p-4 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
         />
       </div>
@@ -23,7 +26,8 @@
         <input
           type="date"
           id="dateInLocation"
-          v-model="dataDevolucao"
+          v-model="dataEntrega"
+          @input="event => filterBy('dataEntrega', event.target.value)"
           class="block shrink w-full p-4 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
         />
       </div>
@@ -46,7 +50,7 @@
 </template>
 <script setup lang="ts">
 import HeaderFilter from "../components/HeaderFilter.vue";
-import { ref, onMounted, provide } from "vue";
+import { ref, onMounted } from "vue";
 import Table from "../components/Table.vue";
 import ModalCofirm from "../components/ModalCofirm.vue";
 import LocalStorage from "../services/storageService";
@@ -68,7 +72,8 @@ const columns = ref<any[]>([
 const dataToDelete = ref<Location>();
 const data = ref<any[]>([]);
 const storageLocation = new LocalStorage<Client>("locations");
-
+const dataEntrega = ref<string>()
+const dataLocacao = ref<string>()
 onMounted((): void => {
   getAllLocations();
 });
@@ -111,6 +116,14 @@ const formatLocacao = (locationList: Location[]) => {
 
   return locationListFormated;
 };
+const filterByClient = (name: string) => {
+  const locationsFiltered = storageLocation.getAll().filter((location: Location) => `${location.cliente.nome} ${location.cliente.sobrenome}`.indexOf(name) !== -1)
+  data.value = formatLocacao(locationsFiltered)
+}
+const filterBy = (key: string, value: string): void => {
+  const locationsFiltered = storageLocation.getAll().filter((location: Location) => location[key].indexOf(value) !== -1)
+  data.value = formatLocacao(locationsFiltered)
+}
 </script>
 
 <style>

@@ -26,7 +26,7 @@
     <ModalCofirm
       v-model:close="hasClosed"
       @confirm="doDelete"
-      text-modal="deseja remover a Locação deste usuário ?"
+      text-modal="deseja remover este cliente ?"
     ></ModalCofirm>
   </div>
 </template>

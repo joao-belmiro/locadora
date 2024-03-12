@@ -17,13 +17,13 @@
     <ModalCofirm
       v-model:close="hasClosed"
       @confirm="doDelete"
-      text-modal="deseja remover a Locação deste usuário ?"
+      text-modal="deseja remover este usuário ?"
     ></ModalCofirm>
   </div>
 </template>
   <script setup lang="ts">
 import HeaderFilter from "../components/HeaderFilter.vue";
-import { ref, onMounted, provide } from "vue";
+import { ref, onMounted } from "vue";
 import { User } from '../models/User'
 import Table from "../components/Table.vue";
 import ModalCofirm from "../components/ModalCofirm.vue";
@@ -33,7 +33,6 @@ const router = useRouter()
 const key = ref<string>("");
 const hasClosed = ref<boolean>(false);
 
-provide("close-modal", hasClosed.value);
 const columns = ref<any[]>([
   { label: 'código', property: 'id' },
   { label: 'Nome', property: 'nome' },

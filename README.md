@@ -33,7 +33,7 @@ Primeiro precisamos instalar um versão do nodeJs compatível, para este projeto
 [Nodejs 18.14.0](https://nodejs.org/en/blog/release/v18.14.0)
 
 
-Para realizar a configuração local do projeto siga os passos **1** e **2** e o projeto aparecerá disponivel na url [localhost:5173]( http://localhost:5173/) caso esta porta esteja disponível
+Para realizar a configuração local do projeto siga os passos **1** e **2** e o projeto aparecerá disponivel na url [localhost:8080]( http://localhost:8080/) caso esta porta esteja disponível
 ### 1- Instalação das dependências
 ```
 npm install
@@ -56,3 +56,15 @@ Foram feitos testes unitários apenas para atestar conhecimento, e não máxima 
 ```
 npm run test
 ```
+
+### Executar a aplicação usando docker
+
+Com o docker devidamente instaado na sua máquina, crie a imagem com o comando abaixo 
+```
+docker build -t locadora .
+```
+em seguida inicie um container a partir da imagem criada na porta 8080 utilizando o comando
+```
+docker run -p 8080:8080 locadora
+```
+Feito isso a sua aplicação estará executando em um container docker

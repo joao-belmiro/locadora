@@ -68,7 +68,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, ref, defineEmits } from "vue";
+import { defineProps, ref, defineEmits, onMounted } from "vue";
 const props = defineProps({
   placeholder: String,
   routerAdd: String,
@@ -78,10 +78,12 @@ const props = defineProps({
 })
 
 const search = ref<string>('')
-const status = ref<string>('ativo')
+const status = ref<string>('')
 
 const emit = defineEmits(['emitSearch', 'emitStatus'])
-
+onMounted(() => {
+  status.value = props.statusPositive?.valueOf()
+})
 const onEmitSearch = () => {
   emit('emitSearch', search.value)
 }

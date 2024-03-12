@@ -1,6 +1,8 @@
+
 interface Location {
+    id: number,
     cliente: Client;
-    filmes: string[];
+    filmes: any[];
     dataLocacao: Date;
     dataEntrega: Date;
     usuarioLocacao: User;

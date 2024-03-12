@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row flex-wrap items-center gap-4">
+  <div class="flex flex-row flex-wrap items-end justify-between gap-4">
     <div class="md:w-1/3 w-full ">
       <label class="text-sm" for="filter">{{ placeholder }}</label>
       <input

@@ -11,8 +11,8 @@
           <h1 class="text-2xl text-white">Locadora</h1>
         </router-link>
         <div class="flex items-center space-x-6 rtl:space-x-reverse">
-          <router-link
-            to="/"
+          <button
+            @click="logOut"
             class="text-white bg-red-800 hover:bg-red-700 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
           >
 
@@ -31,7 +31,7 @@
                 d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"
               ></path>
             </svg>
-            Sair</router-link>
+            Sair</button>
         </div>
       </div>
     </nav>
@@ -68,3 +68,12 @@
     </main>
   </div>
 </template>
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+const router = useRouter();
+
+const logOut = () => {
+  localStorage.removeItem('userLogged')
+  router.push('/')
+}
+</script>

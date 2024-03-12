@@ -87,7 +87,7 @@ const searchbyName = (name: string) => {
 const searchByStatus = (status: string) => {
   data.value = storageUser
     .getAll()
-    .filter((client) => client.status !== status);
+    .filter((client) => client.status === status);
 };
 </script>
   

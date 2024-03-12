@@ -23,16 +23,16 @@
       >
         <div class="flex items-center ps-3">
           <input
-            id="horizontal-list-radio-license"
+            id="positive"
             type="radio"
             :value="statusPositive"
             v-model="status"
-            @input="onEmitStatus"
+            @input="event => onEmitStatus(event.target.value)"
             name="list-radio"
             class="w-4 h-4 text-indigo-600 bg-gray-100 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
           />
           <label
-            for="horizontal-list-radio-license"
+            for="positive"
             class="w-full py-1 ms-2 text-sm font-medium text-gray-900"
             >{{ statusPositive }}
           </label>
@@ -43,16 +43,16 @@
       >
         <div class="flex items-center ps-3">
           <input
-            id="horizontal-list-radio-id"
+            id="negative"
             type="radio"
             v-model="status"
-            @input="onEmitStatus"
+            @input="event => onEmitStatus(event.target.value)"
             :value="statusNegative"
             name="list-radio"
             class="w-4 h-4 text-indigo-600 bg-gray-100 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
           />
           <label
-            for="horizontal-list-radio-id"
+            for="negative"
             class="w-full py-1 ms-2 text-sm font-medium text-gray-900"
             >{{ statusNegative}}</label
           >
@@ -81,14 +81,12 @@ const search = ref<string>('')
 const status = ref<string>('')
 
 const emit = defineEmits(['emitSearch', 'emitStatus'])
-onMounted(() => {
-  status.value = props.statusPositive?.valueOf()
-})
+
 const onEmitSearch = () => {
   emit('emitSearch', search.value)
 }
 
-const onEmitStatus = () => {
-  emit('emitStatus', status.value)
+const onEmitStatus = (value) => {
+  emit('emitStatus', value)
 }
 </script>

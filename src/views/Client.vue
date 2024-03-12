@@ -109,13 +109,12 @@ const searchbyName = (name: string) => {
 }
 
 const searchByStatus = (status: string) => {
-  const clients = storageClient.getAll().filter(client => client.status !== status)
+  const clients = storageClient.getAll().filter(client => client.status === status)
   data.value = formatClient(clients)
 }
 const filterBy = (key: string, value: string): void => {
   const clients = storageClient.getAll().filter(client => client[key].indexOf(value) !== -1)
   data.value = formatClient(clients)
-
 }
 </script>
   

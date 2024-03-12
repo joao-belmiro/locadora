@@ -13,6 +13,10 @@ const keepLogged = () =>{
     router.push('/location')
     alert('usuario já logado ')
   }
+  if (hasUserLog == null) {
+    router.push('/')
+    alert('Usuário não encontrado faça o login')
+  }
 }
 </script>
 
